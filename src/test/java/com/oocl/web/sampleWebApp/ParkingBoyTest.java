@@ -31,6 +31,7 @@ public class ParkingBoyTest {
     public void parking_boy_get_test() throws Exception{
         //given
         ParkingBoy boy = parkingBoyRepository.save(new ParkingBoy("Test1"));
+        parkingBoyRepository.flush();
         //when
         MvcResult result = mvc.perform(get("/parkingboys")).andReturn();
         //then
