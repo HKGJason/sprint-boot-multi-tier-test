@@ -69,4 +69,17 @@ public class ParkingBoyTest {
         //t
                .andExpect(status().isBadRequest());
     }
+    @Test
+    public void parking_boy_ID_not_unique_post_fail_test() throws Exception{
+        //g
+        parkingBoyRepository.deleteAll();
+        ParkingBoy boy = parkingBoyRepository.save(new ParkingBoy("Test1"));
+        parkingBoyRepository.flush();
+        //w
+        String boyJson = "{\"employeeId\":"+"Test1"+"}";
+
+        mvc.perform(post("/parkingboys").contentType(MediaType.APPLICATION_JSON).content(boyJson))
+                //t
+                .andExpect(status().isBadRequest());
+    }
 }
