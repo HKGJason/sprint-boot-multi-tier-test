@@ -25,8 +25,14 @@ public class ParkingBoyResource {
             .toArray(ParkingBoyResponse[]::new);
         return ResponseEntity.ok(parkingBoys);
     }
+/*
+    @GetMapping(value = "/{employeeId}")
+    public ResponseEntity getParkingBoyById(@PathVariable String id)
+    {
+        if ()
 
-
+    }
+*/
     @PostMapping(consumes = "application/json")
     public ResponseEntity<String> addNewParkingBoy(@RequestBody ParkingBoy boy){
         if (!checkEmployeeIdUnique(boy.getEmployeeId()))
