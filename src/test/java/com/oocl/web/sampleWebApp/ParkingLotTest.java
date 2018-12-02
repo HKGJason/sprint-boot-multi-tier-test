@@ -31,6 +31,7 @@ public class ParkingLotTest {
         //g
         parkingLotRepository.deleteAll();
         parkingLotRepository.save(new ParkingLot("Test1", 1));
+        parkingLotRepository.flush();
         //w
         MvcResult result = mvc.perform(get("/parkinglots")).andReturn();
 

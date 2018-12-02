@@ -15,7 +15,7 @@ public class ParkingLot {
     @Column(name = "parking_lot_id", unique = true, nullable = false)
     private String parkingLotId;
 
-    private ParkingBoy boy;
+//    private ParkingBoy boy;
 
     @Max(100)
     @Min(1)
@@ -45,9 +45,9 @@ public class ParkingLot {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-
+/*
     public ParkingBoy getBoy() {
         return boy;
     }
-
+*/
 }
