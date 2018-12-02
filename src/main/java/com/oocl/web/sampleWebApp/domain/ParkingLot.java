@@ -61,4 +61,8 @@ public class ParkingLot {
     public void setAvailablePositionCount(int availablePositionCountl) {
         this.availablePositionCount = availablePositionCountl;
     }
+
+    public long getId() {
+        return id;
+    }
 }

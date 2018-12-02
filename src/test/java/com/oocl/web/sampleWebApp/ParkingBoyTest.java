@@ -112,4 +112,23 @@ public class ParkingBoyTest {
         assertEquals("TestLot", response.getAssociatedParkingLots().get(0).getParkingLotId());
 
     }
+    @Test
+    public void save_parking_boy_lot_assocation_test() throws Exception
+    {
+        //g
+        parkingLotRepository.deleteAll();
+        parkingBoyRepository.deleteAll();
+        ParkingBoy boy = parkingBoyRepository.save(new ParkingBoy("TestBoy"));
+        ParkingLot lot = parkingLotRepository.save(new ParkingLot("TestLot", 50));
+
+        //w
+        MvcResult result = mvc.perform(post("/parkingboys/"+boy.getId()+"/parkinglots/"+lot.getId())).andReturn();
+
+        //t
+        assertEquals(201, result.getResponse().getStatus());
+        ParkingLot fetchLot = parkingLotRepository.findByParkingLotId("TestLot");
+
+        assertEquals(boy.getId(), fetchLot.getBoy().getId());
+
+    }
 }
