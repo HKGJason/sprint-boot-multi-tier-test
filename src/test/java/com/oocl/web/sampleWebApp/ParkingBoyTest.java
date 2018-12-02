@@ -15,6 +15,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import javax.persistence.EntityManager;
+
 import static com.oocl.web.sampleWebApp.WebTestUtil.getContentAsObject;
 import static junit.framework.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -31,9 +33,13 @@ public class ParkingBoyTest {
     @Autowired
     private MockMvc mvc;
 
+    @Autowired
+    private EntityManager entityManager;
+
     @Test
     public void parking_boy_get_test() throws Exception{
         //given
+        parkingBoyRepository.deleteAll();
         ParkingBoy boy = parkingBoyRepository.save(new ParkingBoy("Test1"));
         parkingBoyRepository.flush();
         //when
