@@ -26,6 +26,7 @@ public class ParkingBoyResource {
         return ResponseEntity.ok(parkingBoys);
     }
 
+
     @PostMapping(consumes = "application/json")
     public ResponseEntity<String> addNewParkingBoy(@RequestBody ParkingBoy boy){
         if (!checkEmployeeIdUnique(boy.getEmployeeId()))

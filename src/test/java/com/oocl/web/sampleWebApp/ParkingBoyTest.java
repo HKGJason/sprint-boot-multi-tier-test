@@ -49,6 +49,12 @@ public class ParkingBoyTest {
         assertEquals("Test1", getContentAsObject(result, ParkingBoyResponse[].class)[0].getEmployeeId());
     }
     @Test
+    public void parking_boy_get_not_exist() throws Exception{
+        //w t
+        mvc.perform(get("parkingboys/notexist")).andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void add_new_parking_boy_test() throws Exception{
         //given
         parkingBoyRepository.deleteAll();
