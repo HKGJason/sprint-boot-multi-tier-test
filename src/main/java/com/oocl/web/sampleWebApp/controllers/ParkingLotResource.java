@@ -12,5 +12,5 @@ public class ParkingLotResource {
     @Autowired
     private ParkingLotRepository parkingLotRepository;
 
-    
+
 }
