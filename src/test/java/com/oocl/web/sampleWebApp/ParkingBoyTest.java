@@ -4,6 +4,7 @@ import com.oocl.web.sampleWebApp.domain.ParkingBoy;
 import com.oocl.web.sampleWebApp.domain.ParkingBoyRepository;
 import com.oocl.web.sampleWebApp.domain.ParkingLot;
 import com.oocl.web.sampleWebApp.domain.ParkingLotRepository;
+import com.oocl.web.sampleWebApp.models.ParkingBoyLotsAssociationResponse;
 import com.oocl.web.sampleWebApp.models.ParkingBoyResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -106,7 +107,9 @@ public class ParkingBoyTest {
         //w
         MvcResult result = mvc.perform(get("/parkingboys/"+boy.getId()+"/parkinglots")).andReturn();
         //t
-        ParkingBoyLotAssocationResponse response
+        ParkingBoyLotsAssociationResponse response = getContentAsObject(result, ParkingBoyLotsAssociationResponse.class);
+        assertEquals("TestBoy", response.getEmployeeId());
+        assertEquals("TestLot", response.getAssociatedParkingLots().get(0).getParkingLotId());
 
     }
 }
