@@ -2,6 +2,9 @@ package com.oocl.web.sampleWebApp.controllers;
 
 import com.oocl.web.sampleWebApp.domain.ParkingBoy;
 import com.oocl.web.sampleWebApp.domain.ParkingBoyRepository;
+import com.oocl.web.sampleWebApp.domain.ParkingLot;
+import com.oocl.web.sampleWebApp.domain.ParkingLotRepository;
+import com.oocl.web.sampleWebApp.models.ParkingBoyLotsAssociationResponse;
 import com.oocl.web.sampleWebApp.models.ParkingBoyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,8 @@ import java.util.List;
 public class ParkingBoyResource {
 
     @Autowired
+    private ParkingLotRepository parkingLotRepository;
+    @Autowired
     private ParkingBoyRepository parkingBoyRepository;
 
     @GetMapping
@@ -25,14 +30,7 @@ public class ParkingBoyResource {
             .toArray(ParkingBoyResponse[]::new);
         return ResponseEntity.ok(parkingBoys);
     }
-/*
-    @GetMapping(value = "/{employeeId}")
-    public ResponseEntity getParkingBoyById(@PathVariable String id)
-    {
-        if ()
 
-    }
-*/
     @PostMapping(consumes = "application/json")
     public ResponseEntity<String> addNewParkingBoy(@RequestBody ParkingBoy boy){
         if (!checkEmployeeIdUnique(boy.getEmployeeId()))
@@ -54,5 +52,17 @@ public class ParkingBoyResource {
             return false;
         }
         return true;
+    }
+
+    @GetMapping(path = "/{id}/parkinglots")
+    public ResponseEntity<ParkingBoyLotsAssociationResponse> getParkingLotsAssociation(@PathVariable Long id) {
+        if(!parkingBoyRepository.findById(id).isPresent()){
+            return ResponseEntity.notFound().build();
+        }
+        final ParkingBoy parkingBoy = parkingBoyRepository.findById(id).get();
+        final List<ParkingLot> associatedParkingLots = parkingLotRepository.findByParkingBoyId(id);
+
+        final ParkingBoyLotsAssociationResponse response = ParkingBoyLotsAssociationResponse.create(parkingBoy, associatedParkingLots);
+        return ResponseEntity.ok(response);
     }
 }
