@@ -20,7 +20,7 @@ public class ParkingLotResource {
     @GetMapping
     public ResponseEntity<ParkingLotResponse[]> getAll(){
         ParkingLotResponse[] lots = parkingLotRepository.findAll().stream()
-                .map(parkingLot -> ParkingLotResponse.create(parkingLot.getParkingLotId(),parkingLot.getCapacity())).toArray(ParkingLotResponse[]::new);
+                .map(parkingLot -> ParkingLotResponse.create(parkingLot.getParkingLotId(),parkingLot.getCapacity(), parkingLot.getAvailablePositionCount())).toArray(ParkingLotResponse[]::new);
         return ResponseEntity.ok(lots);
     }
     @PostMapping(consumes = "application/json")

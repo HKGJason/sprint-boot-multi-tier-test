@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.oocl.web.sampleWebApp.WebTestUtil.getContentAsObject;
 import static junit.framework.Assert.assertEquals;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static sun.plugin2.util.PojoUtil.toJson;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -50,7 +52,8 @@ public class ParkingLotTest {
     public void add_new_parking_lot_test() throws Exception{
         //g
         parkingLotRepository.deleteAll();
-        String lotJson = "{\"parkingLotId\":lot1}";
+        ParkingLot lot = new ParkingLot("lot1", 50);
+        String lotJson = toJson(lot);
         //w
         mvc.perform(post("/parkinglots").contentType(MediaType.APPLICATION_JSON).content(lotJson))
                 //t

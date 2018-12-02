@@ -2,6 +2,8 @@ package com.oocl.web.sampleWebApp;
 
 import com.oocl.web.sampleWebApp.domain.ParkingBoy;
 import com.oocl.web.sampleWebApp.domain.ParkingBoyRepository;
+import com.oocl.web.sampleWebApp.domain.ParkingLot;
+import com.oocl.web.sampleWebApp.domain.ParkingLotRepository;
 import com.oocl.web.sampleWebApp.models.ParkingBoyResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ParkingBoyTest {
     @Autowired
     private ParkingBoyRepository parkingBoyRepository;
+    @Autowired
+    private ParkingLotRepository parkingLotRepository;
 
     @Autowired
     private MockMvc mvc;
@@ -89,5 +93,20 @@ public class ParkingBoyTest {
         mvc.perform(post("/parkingboys").contentType(MediaType.APPLICATION_JSON).content(boyJson))
                 //t
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void get_parking_boy_by_parking_lot_test() throws Exception{
+        //g
+        ParkingBoy boy = parkingBoyRepository.save(new ParkingBoy("TestBoy"));
+        ParkingLot lot = parkingLotRepository.save(new ParkingLot("TestLot", 50));
+        parkingBoyRepository.flush();
+        parkingLotRepository.flush();
+        lot.setBoy(boy);
+        //w
+        MvcResult result = mvc.perform(get("/parkingboys/"+boy.getId()+"/parkinglots")).andReturn();
+        //t
+        ParkingBoyLotAssocationResponse response
+
     }
 }

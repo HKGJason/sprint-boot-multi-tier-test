@@ -8,6 +8,7 @@ import java.util.Objects;
 public class ParkingLotResponse {
     private String parkingLotId;
     private int capacity;
+    private int availablePositionCount;
 
 
     public String getParkingLotId() {
@@ -25,18 +26,27 @@ public class ParkingLotResponse {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-    public static ParkingLotResponse create(String parkingLotId, int capacity){
+    public static ParkingLotResponse create(String parkingLotId, int capacity, int posCount){
         Objects.requireNonNull(parkingLotId);
         final ParkingLotResponse response = new ParkingLotResponse();
         response.setParkingLotId(parkingLotId);
         response.setCapacity(capacity);
+        response.setAvailablePositionCount(posCount);
         return response;
     }
     public static ParkingLotResponse create(ParkingLot entity){
-        return create(entity.getParkingLotId(), entity.getCapacity());
+        return create(entity.getParkingLotId(), entity.getCapacity(), entity.getAvailablePositionCount());
     }
     @JsonIgnore
     public boolean isValid(){
         return parkingLotId != null;
+    }
+
+    public int getAvailablePositionCount() {
+        return availablePositionCount;
+    }
+
+    public void setAvailablePositionCount(int availablePositionCount) {
+        this.availablePositionCount = availablePositionCount;
     }
 }
