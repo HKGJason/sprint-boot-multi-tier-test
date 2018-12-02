@@ -51,7 +51,8 @@ public class ParkingBoyTest {
     @Test
     public void add_new_parking_boy_test() throws Exception{
         //given
-        String boyJson = "{\"employeeId\":"+1+"}";
+        parkingBoyRepository.deleteAll();
+        String boyJson = "{\"employeeId\":"+123+"}";
         //when
         mvc.perform(post("/parkingboys").contentType(MediaType.APPLICATION_JSON)
          //t
@@ -62,6 +63,7 @@ public class ParkingBoyTest {
     @Test
     public void parking_boy_ID_exceed_maximum_post_fail_test() throws Exception{
         //g
+        parkingBoyRepository.deleteAll();
         String idtooLong = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         String boyJson = "{\"employeeId\":"+idtooLong+"}";
         //w

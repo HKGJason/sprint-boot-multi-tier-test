@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/parkingboys")
@@ -25,11 +27,25 @@ public class ParkingBoyResource {
     }
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<String> addNewParkingBoy(@RequestBody ParkingBoy boy)
-    {
-        if (parkingBoyRepository.save(boy) != null){
-            return ResponseEntity.created(URI.create("/parkingboys/"+boy.getEmployeeId())).build();
+    public ResponseEntity<String> addNewParkingBoy(@RequestBody ParkingBoy boy){
+        if (!checkEmployeeIdUnique(boy.getEmployeeId()))
+        {
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.badRequest().build();
+        if (parkingBoyRepository.save(boy) == null){
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.created(URI.create("/parkingboys/"+boy.getEmployeeId())).build();
+
+    }
+
+    private boolean checkEmployeeIdUnique(String id) {
+        List<ParkingBoy> boys =  parkingBoyRepository.findAll();
+        for (ParkingBoy boy: boys){
+            boy.getEmployeeId().equals(id);
+            return false;
+        }
+        return true;
     }
 }
