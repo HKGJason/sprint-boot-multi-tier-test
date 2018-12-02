@@ -54,8 +54,19 @@ public class ParkingBoyTest {
         String boyJson = "{\"employeeId\":"+1+"}";
         //when
         mvc.perform(post("/parkingboys").contentType(MediaType.APPLICATION_JSON)
+         //t
                 .content(boyJson)).andExpect(status().isCreated());
 
 
+    }
+    @Test
+    public void parking_boy_ID_exceed_maximum_post_fail_test() throws Exception{
+        //g
+        String idtooLong = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        String boyJson = "{\"employeeId\":"+idtooLong+"}";
+        //w
+        mvc.perform(post("/parkingboys").contentType(MediaType.APPLICATION_JSON).content(boyJson))
+        //t
+               .andExpect(status().isBadRequest());
     }
 }
