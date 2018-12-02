@@ -65,4 +65,15 @@ public class ParkingBoyResource {
         final ParkingBoyLotsAssociationResponse response = ParkingBoyLotsAssociationResponse.create(parkingBoy, associatedParkingLots);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping(path = "/{pbId}/parkinglots/{plId}")
+    public ResponseEntity<ParkingBoyLotsAssociationResponse> associateParkingLot(@PathVariable Long pbId, @PathVariable Long plId) {
+        if(!parkingBoyRepository.findById(pbId).isPresent()|| !parkingLotRepository.findById(plId).isPresent()){
+            return ResponseEntity.badRequest().build();
+        }
+        final ParkingLot parkingLot = parkingLotRepository.findById(plId).get();
+        parkingLot.setParkingBoyId(pbId);
+        parkingLotRepository.saveAndFlush(parkingLot);
+        return ResponseEntity.created(URI.create("/parkingboys/" + pbId + "/parkinglots/" + plId)).build();
+    }
 }

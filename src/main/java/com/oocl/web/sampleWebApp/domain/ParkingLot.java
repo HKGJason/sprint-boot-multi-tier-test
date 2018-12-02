@@ -15,7 +15,7 @@ public class ParkingLot {
     @Column(name = "parking_lot_id", unique = true, nullable = false)
     private String parkingLotId;
 
-    private ParkingBoy boy;
+    private Long parkingBoyId;
 
     private int availablePositionCount;
 
@@ -30,9 +30,6 @@ public class ParkingLot {
         this.availablePositionCount = capacity;
     }
 
-    public void setBoy(ParkingBoy boy) {
-        this.boy = boy;
-    }
 
     public String getParkingLotId() {
         return parkingLotId;
@@ -50,9 +47,6 @@ public class ParkingLot {
         this.capacity = capacity;
     }
 
-    public ParkingBoy getBoy() {
-        return boy;
-    }
 
     public int getAvailablePositionCount() {
         return availablePositionCount;
@@ -64,5 +58,13 @@ public class ParkingLot {
 
     public long getId() {
         return id;
+    }
+
+    public void setParkingBoyId(Long Id) {
+        this.parkingBoyId = id;
+    }
+
+    public Long getParkingBoyId() {
+        return parkingBoyId;
     }
 }

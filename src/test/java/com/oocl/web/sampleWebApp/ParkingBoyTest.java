@@ -103,7 +103,7 @@ public class ParkingBoyTest {
         ParkingLot lot = parkingLotRepository.save(new ParkingLot("TestLot", 50));
         parkingBoyRepository.flush();
         parkingLotRepository.flush();
-        lot.setBoy(boy);
+        lot.setParkingBoyId(boy.getId());
         //w
         MvcResult result = mvc.perform(get("/parkingboys/"+boy.getId()+"/parkinglots")).andReturn();
         //t
@@ -128,7 +128,7 @@ public class ParkingBoyTest {
         assertEquals(201, result.getResponse().getStatus());
         ParkingLot fetchLot = parkingLotRepository.findByParkingLotId("TestLot");
 
-        assertEquals(boy.getId(), fetchLot.getBoy().getId());
+        assertEquals(boy.getId(), fetchLot.getParkingBoyId());
 
     }
 }
